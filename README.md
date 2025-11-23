@@ -77,6 +77,17 @@ http://your-domain/admin
 
 ### 1. 首次設定
 
+### 範例
+
+在 `routes/console.php` 中定義排程：
+
+```php
+// 測試排程：每十分鐘執行一次
+schedule_command('say:good-evening')
+    ->everyTenMinutes()
+    ->description('每十分鐘說晚安');
+```
+
 登入後台後，首次使用時需要將程式碼中的排程同步到資料庫：
 
 1. 在 Filament 後台進入「排程任務」頁面
@@ -84,24 +95,10 @@ http://your-domain/admin
 3. 系統會自動掃描並同步所有排程任務
 
 
-
-
-## 排程設定
-
 ### ⚠️ 重要提醒
 
-如果您建立了新的 Artisan 命令（Command），記得要在 `routes/console.php` 中使用 `Schedule::command()` 註冊排程，然後在後台執行「同步排程」才會出現在 UI 中。
+如果您建立了新的 Artisan 命令（Command），記得要在 `routes/console.php` 中使用 `schedule_command` 註冊排程，然後在後台執行「同步排程」才會出現在 UI 中。
 
-### 範例
 
-在 `routes/console.php` 中定義排程：
-
-```php
-use Illuminate\Support\Facades\Schedule;
-
-Schedule::command('say:hi')
-    ->dailyAt('08:00')
-    ->description('每天早上 8 點說 Hi');
-```
 
 
