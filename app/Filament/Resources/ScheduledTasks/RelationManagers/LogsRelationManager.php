@@ -18,7 +18,7 @@ class LogsRelationManager extends RelationManager
         return $table
             ->columns([
                 TextColumn::make('status')
-                    ->label('狀態')
+                    ->label(__('schedule.status'))
                     ->badge()
                     ->color(fn (ScheduledTaskLogStatus $state): string => match ($state) {
                         ScheduledTaskLogStatus::Running => 'info',
@@ -27,26 +27,26 @@ class LogsRelationManager extends RelationManager
                         ScheduledTaskLogStatus::Skipped => 'warning',
                     }),
                 TextColumn::make('started_at')
-                    ->label('開始時間')
+                    ->label(__('schedule.started_at'))
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('finished_at')
-                    ->label('結束時間')
+                    ->label(__('schedule.finished_at'))
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('duration')
-                    ->label('執行時長')
-                    ->formatStateUsing(fn (?int $state): string => $state ? number_format($state / 1000, 2).' 秒' : '-'),
+                    ->label(__('schedule.duration'))
+                    ->formatStateUsing(fn (?int $state): string => $state ? number_format($state / 1000, 2).' '.__('schedule.seconds') : '-'),
                 TextColumn::make('exit_code')
-                    ->label('退出碼')
+                    ->label(__('schedule.exit_code'))
                     ->badge()
                     ->color(fn (?int $state): string => $state === 0 ? 'success' : 'danger'),
                 TextColumn::make('error_message')
-                    ->label('錯誤訊息')
+                    ->label(__('schedule.error_message'))
                     ->limit(50)
                     ->wrap(),
                 TextColumn::make('output')
-                    ->label('執行輸出')
+                    ->label(__('schedule.output'))
                     ->limit(100)
                     ->wrap()
                     ->toggleable()
@@ -54,8 +54,8 @@ class LogsRelationManager extends RelationManager
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->label('查看完整輸出')
-                    ->modalHeading(fn ($record) => '執行記錄 #'.$record->id)
+                    ->label(__('schedule.view_full_output'))
+                    ->modalHeading(fn ($record) => __('schedule.log_detail', ['id' => $record->id]))
                     ->modalContent(function ($record) {
                         return view('filament.scheduled-tasks.log-detail', [
                             'log' => $record,
@@ -65,15 +65,15 @@ class LogsRelationManager extends RelationManager
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->label('狀態')
+                    ->label(__('schedule.status'))
                     ->options([
-                        ScheduledTaskLogStatus::Running->value => '執行中',
-                        ScheduledTaskLogStatus::Success->value => '成功',
-                        ScheduledTaskLogStatus::Failed->value => '失敗',
-                        ScheduledTaskLogStatus::Skipped->value => '跳過',
+                        ScheduledTaskLogStatus::Running->value => __('schedule.running'),
+                        ScheduledTaskLogStatus::Success->value => __('schedule.success'),
+                        ScheduledTaskLogStatus::Failed->value => __('schedule.failed'),
+                        ScheduledTaskLogStatus::Skipped->value => __('schedule.skipped'),
                     ]),
             ])
             ->defaultSort('started_at', 'desc')
-            ->poll('30s'); // 每 30 秒自動刷新
+            ->poll('30s');
     }
 }

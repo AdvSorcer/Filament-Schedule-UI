@@ -35,4 +35,15 @@ return [
         'connection' => env('FILAMENT_SCHEDULE_UI_REDIS_CONNECTION', 'default'),
         'prefix' => env('FILAMENT_SCHEDULE_UI_REDIS_PREFIX', 'schedule_ui:'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | 指定 Filament Schedule UI 的預設語言。
+    | 可選值: 'zh_TW' (繁體中文), 'en' (英文)
+    |
+    */
+    'locale' => env('FILAMENT_SCHEDULE_UI_LOCALE', 'zh_TW'),
 ];

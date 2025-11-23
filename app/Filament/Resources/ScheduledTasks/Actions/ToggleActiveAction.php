@@ -17,15 +17,18 @@ class ToggleActiveAction extends Action
     {
         parent::setUp();
 
-        $this->label(fn (ScheduledTask $record) => $record->is_active ? '停用' : '啟用')
+        $this->label(fn (ScheduledTask $record) => $record->is_active ? __('schedule.disable') : __('schedule.enable'))
             ->icon(fn (ScheduledTask $record) => $record->is_active ? 'heroicon-o-pause' : 'heroicon-o-play')
             ->color(fn (ScheduledTask $record) => $record->is_active ? 'warning' : 'success')
             ->action(function (ScheduledTask $record) {
                 $record->update(['is_active' => ! $record->is_active]);
 
+                $taskName = $record->description ?: $record->command;
+                $statusKey = $record->is_active ? 'task_enabled' : 'task_disabled';
+
                 Notification::make()
-                    ->title($record->is_active ? '已啟用' : '已停用')
-                    ->body("排程「{$record->name}」已".($record->is_active ? '啟用' : '停用'))
+                    ->title($record->is_active ? __('schedule.enabled_status') : __('schedule.disabled_status'))
+                    ->body(__("schedule.{$statusKey}", ['name' => $taskName]))
                     ->success()
                     ->send();
             });

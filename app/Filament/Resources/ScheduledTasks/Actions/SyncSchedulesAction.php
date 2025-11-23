@@ -17,18 +17,18 @@ class SyncSchedulesAction extends Action
     {
         parent::setUp();
 
-        $this->label('同步排程')
+        $this->label(__('schedule.sync_schedules'))
             ->icon('heroicon-o-arrow-path')
             ->color('info')
             ->requiresConfirmation()
-            ->modalHeading('確認同步')
-            ->modalDescription('這將從程式碼中同步所有排程任務到資料庫。')
+            ->modalHeading(__('schedule.confirm_sync'))
+            ->modalDescription(__('schedule.confirm_sync_description'))
             ->action(function () {
                 Artisan::call('schedule:sync');
 
                 Notification::make()
-                    ->title('同步完成')
-                    ->body('排程已成功同步')
+                    ->title(__('schedule.sync_complete'))
+                    ->body(__('schedule.sync_success'))
                     ->success()
                     ->send();
             });

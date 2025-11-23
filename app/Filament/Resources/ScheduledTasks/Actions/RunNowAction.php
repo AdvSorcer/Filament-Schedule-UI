@@ -19,12 +19,12 @@ class RunNowAction extends Action
     {
         parent::setUp();
 
-        $this->label('立即執行')
+        $this->label(__('schedule.run_now'))
             ->icon('heroicon-o-play')
             ->color('success')
             ->requiresConfirmation()
-            ->modalHeading('確認執行排程')
-            ->modalDescription('您確定要立即執行這個排程嗎？')
+            ->modalHeading(__('schedule.confirm_run'))
+            ->modalDescription(__('schedule.confirm_run_description'))
             ->action(function (ScheduledTask $record) {
                 $this->executeTask($record);
             });
@@ -72,8 +72,8 @@ class RunNowAction extends Action
             $record->update(['last_run_at' => $finishedAt]);
 
             $notification = Notification::make()
-                ->title($exitCode === 0 ? '執行成功' : '執行失敗')
-                ->body($exitCode === 0 ? '排程已成功執行' : "排程執行失敗，退出碼: {$exitCode}");
+                ->title($exitCode === 0 ? __('schedule.run_success') : __('schedule.run_failed'))
+                ->body($exitCode === 0 ? __('schedule.task_run_success') : __('schedule.task_run_failed', ['code' => $exitCode]));
 
             if ($exitCode === 0) {
                 $notification->success();
@@ -95,8 +95,8 @@ class RunNowAction extends Action
             ]);
 
             Notification::make()
-                ->title('執行錯誤')
-                ->body('執行排程時發生錯誤: '.$e->getMessage())
+                ->title(__('schedule.run_error'))
+                ->body(__('schedule.run_error_message', ['error' => $e->getMessage()]))
                 ->danger()
                 ->send();
         }

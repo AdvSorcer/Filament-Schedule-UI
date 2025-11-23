@@ -19,17 +19,17 @@ class ScheduledTasksTable
         return $table
             ->columns([
                 TextColumn::make('description')
-                    ->label('名稱')
+                    ->label(__('schedule.name'))
                     ->searchable()
                     ->sortable()
                     ->formatStateUsing(fn ($state, $record) => $state ?: $record->command)
                     ->placeholder('-'),
                 TextColumn::make('command')
-                    ->label('命令')
+                    ->label(__('schedule.command'))
                     ->searchable()
                     ->limit(50),
                 TextColumn::make('command_type')
-                    ->label('類型')
+                    ->label(__('schedule.type'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'command' => 'success',
@@ -38,50 +38,50 @@ class ScheduledTasksTable
                         default => 'gray',
                     }),
                 TextColumn::make('expression')
-                    ->label('Cron 表達式')
+                    ->label(__('schedule.cron_expression'))
                     ->searchable(),
                 ToggleColumn::make('is_active')
-                    ->label('啟用')
+                    ->label(__('schedule.enabled'))
                     ->afterStateUpdated(function (ScheduledTask $record, $state) {
                         $taskName = $record->description ?: $record->command;
-                        $status = $state ? '已啟用' : '已停用';
+                        $statusKey = $state ? 'task_enabled' : 'task_disabled';
 
                         try {
                             Notification::make()
-                                ->title('操作成功')
-                                ->body("排程「{$taskName}」已{$status}")
+                                ->title(__('schedule.operation_success'))
+                                ->body(__("schedule.{$statusKey}", ['name' => $taskName]))
                                 ->success()
                                 ->send();
                         } catch (\Exception $e) {
                             Notification::make()
-                                ->title('操作失敗')
-                                ->body('更新排程狀態時發生錯誤: '.$e->getMessage())
+                                ->title(__('schedule.operation_failed'))
+                                ->body(__('schedule.update_status_error', ['error' => $e->getMessage()]))
                                 ->danger()
                                 ->send();
                         }
                     }),
                 TextColumn::make('next_run_at')
-                    ->label('下次執行')
+                    ->label(__('schedule.next_run'))
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('last_run_at')
-                    ->label('最後執行')
+                    ->label(__('schedule.last_run'))
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('is_active')
-                    ->label('狀態')
+                    ->label(__('schedule.status'))
                     ->options([
-                        true => '啟用',
-                        false => '停用',
+                        true => __('schedule.active'),
+                        false => __('schedule.inactive'),
                     ]),
                 SelectFilter::make('command_type')
-                    ->label('類型')
+                    ->label(__('schedule.type'))
                     ->options([
-                        'command' => 'Command',
-                        'call' => 'Call',
-                        'exec' => 'Exec',
+                        'command' => __('schedule.command_type'),
+                        'call' => __('schedule.call_type'),
+                        'exec' => __('schedule.exec_type'),
                     ]),
             ])
             ->recordActions([
