@@ -44,3 +44,4 @@ class ScheduledTaskResource extends Resource
     }
 }
 
+

@@ -10,3 +10,4 @@ enum ScheduledTaskLogStatus: string
     case Skipped = 'skipped';
 }
 
+

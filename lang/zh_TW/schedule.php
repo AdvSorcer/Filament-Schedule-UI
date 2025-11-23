@@ -68,3 +68,4 @@ return [
     'failed' => '失敗',
     'skipped' => '跳過',
 ];
+

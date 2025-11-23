@@ -59,11 +59,9 @@ class FilamentScheduleUIServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'filament');
 
         // 註冊 Artisan 命令
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                SyncSchedulesCommand::class,
-            ]);
-        }
+        $this->commands([
+            SyncSchedulesCommand::class,
+        ]);
 
         // 註冊事件監聽器
         Event::listen(ScheduledTaskStarting::class, LogScheduledTaskStarting::class);
@@ -78,4 +76,3 @@ class FilamentScheduleUIServiceProvider extends ServiceProvider
         }
     }
 }
-

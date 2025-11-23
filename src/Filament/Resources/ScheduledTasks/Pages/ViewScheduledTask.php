@@ -10,3 +10,4 @@ class ViewScheduledTask extends ViewRecord
     protected static string $resource = ScheduledTaskResource::class;
 }
 
+

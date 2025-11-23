@@ -68,3 +68,4 @@ return [
     'failed' => 'Failed',
     'skipped' => 'Skipped',
 ];
+
