@@ -29,15 +29,11 @@ Execution Messages
 
 ### 1. Install Package
 
-Install via Composer:
-
 ```bash
 composer require advsorcer/filament-schedule-ui
 ```
 
 ### 2. Install Filament Panel (if not already installed)
-
-If your project doesn't have Filament Panel installed yet, run:
 
 ```bash
 php artisan filament:install --panels
@@ -45,15 +41,11 @@ php artisan filament:install --panels
 
 ### 3. Create Filament User (if not already created)
 
-If your project doesn't have a Filament user created yet, run:
-
 ```bash
 php artisan make:filament-user
 ```
 
 ### 4. Publish Configuration
-
-Publish the configuration file to your project:
 
 ```bash
 php artisan vendor:publish --tag=filament-schedule-ui-config
@@ -62,8 +54,6 @@ php artisan vendor:publish --tag=filament-schedule-ui-config
 This will publish the configuration file to `config/filament-schedule-ui.php`.
 
 ### 5. Publish and Run Migrations
-
-Publish migration files and run them:
 
 ```bash
 php artisan vendor:publish --tag=filament-schedule-ui-migrations
