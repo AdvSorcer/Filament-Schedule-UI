@@ -71,15 +71,15 @@ Log in with the admin account you just created.
 ## Features
 
 ### 📋 Schedule Management
-- **Auto Sync**: Automatically sync all scheduled tasks from code to database
-- **Schedule List**: Clearly display all scheduled tasks, including name, command, execution time, and other information
-- **Enable/Disable**: Toggle schedule status with one click
-- **Run Now**: Manually trigger schedule execution without waiting for the scheduled time
-- **Complete Logging**: Record detailed information for each schedule execution
-- **Execution Status**: Display execution status such as success, failure, skipped, etc.
-- **Execution Output**: View complete command execution output
-- **Execution Duration**: Record the duration of each execution
-- **Error Tracking**: Record error messages when execution fails
+- **Auto Sync**
+- **Schedule List**
+- **Enable/Disable**
+- **Run Now**
+- **Complete Logging**
+- **Execution Status**
+- **Execution Output**
+- **Execution Duration**
+- **Error Tracking**
 
 
 ## Usage
