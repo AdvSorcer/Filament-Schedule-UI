@@ -35,7 +35,23 @@ Install via Composer:
 composer require advsorcer/filament-schedule-ui
 ```
 
-### 2. Publish Configuration
+### 2. Install Filament Panel (if not already installed)
+
+If your project doesn't have Filament Panel installed yet, run:
+
+```bash
+php artisan filament:install --panels
+```
+
+### 3. Create Filament User (if not already created)
+
+If your project doesn't have a Filament user created yet, run:
+
+```bash
+php artisan make:filament-user
+```
+
+### 4. Publish Configuration
 
 Publish the configuration file to your project:
 
@@ -45,7 +61,7 @@ php artisan vendor:publish --tag=filament-schedule-ui-config
 
 This will publish the configuration file to `config/filament-schedule-ui.php`.
 
-### 3. Publish and Run Migrations
+### 5. Publish and Run Migrations
 
 Publish migration files and run them:
 
@@ -54,7 +70,7 @@ php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 4. Publish Language Files (Optional)
+### 6. Publish Language Files (Optional)
 
 If you need to customize language files:
 
@@ -62,7 +78,7 @@ If you need to customize language files:
 php artisan vendor:publish --tag=filament-schedule-ui-lang
 ```
 
-### 5. Register Plugin in Filament Panel
+### 7. Register Plugin in Filament Panel
 
 Register the plugin in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
 
@@ -77,7 +93,7 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-### 6. Configure Language (Optional)
+### 8. Configure Language (Optional)
 
 Set the language in `.env`:
 

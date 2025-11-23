@@ -35,7 +35,23 @@
 composer require advsorcer/filament-schedule-ui
 ```
 
-### 2. 發布配置檔案
+### 2. 安裝 Filament Panel（如果還沒有安裝）
+
+如果您的專案還沒有安裝 Filament Panel，請執行：
+
+```bash
+php artisan filament:install --panels
+```
+
+### 3. 創建 Filament 用戶（如果還沒有創建）
+
+如果您的專案還沒有創建 Filament 用戶，請執行：
+
+```bash
+php artisan make:filament-user
+```
+
+### 4. 發布配置檔案
 
 發布配置檔案到你的專案：
 
@@ -45,7 +61,7 @@ php artisan vendor:publish --tag=filament-schedule-ui-config
 
 這會將配置檔案發布到 `config/filament-schedule-ui.php`。
 
-### 3. 發布並執行遷移
+### 5. 發布並執行遷移
 
 發布遷移檔案並執行：
 
@@ -54,7 +70,7 @@ php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 4. 發布語言檔案（可選）
+### 6. 發布語言檔案（可選）
 
 如果需要自訂語言檔案：
 
@@ -62,7 +78,7 @@ php artisan migrate
 php artisan vendor:publish --tag=filament-schedule-ui-lang
 ```
 
-### 5. 在 Filament Panel 中註冊 Plugin
+### 7. 在 Filament Panel 中註冊 Plugin
 
 在你的 Filament Panel Provider（通常是 `app/Providers/Filament/AdminPanelProvider.php`）中註冊 Plugin：
 
@@ -77,7 +93,7 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-### 6. 配置語言（可選）
+### 8. 配置語言（可選）
 
 在 `.env` 中設定語言：
 
