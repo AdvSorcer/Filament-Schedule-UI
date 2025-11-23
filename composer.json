@@ -24,7 +24,10 @@
     },
     "autoload": {
         "psr-4": {
-            "AdvSorcer\\FilamentScheduleUI\\": "src/"
+            "App\\": "app/",
+            "AdvSorcer\\FilamentScheduleUI\\": "src/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "src/helpers.php"
