@@ -1,0 +1,118 @@
+# Filament Schedule UI
+
+English | [繁體中文](README.md)
+
+A Laravel schedule management tool based on Filament that allows you to easily manage and monitor all scheduled tasks in the admin interface.
+
+![Schedule List](docs/images/ui-1.png)
+
+Execution Messages
+
+![Execution Messages](docs/images/ui-2.png)
+
+
+## System Requirements
+
+- PHP >= 8.2
+- Laravel >= 12.0
+- Composer
+
+## Installation Steps
+
+### 1. Install Dependencies
+
+```bash
+composer install
+```
+
+### 2. Environment Configuration
+
+Copy the environment variables file and configure:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 3. Database Setup
+
+Configure the database connection (in `.env`), then run migrations:
+
+```bash
+php artisan migrate
+```
+
+### 4. Create Filament Admin
+
+Create the first admin account to log in to the admin panel:
+
+```bash
+php artisan make:filament-user
+```
+
+Follow the prompts to enter your name, email, and password.
+
+### 5. Access Admin Panel
+
+After starting the application, navigate to:
+
+```
+php artisan serve
+```
+
+```
+http://your-domain/admin
+or
+http://127.0.0.1:8000/admin
+```
+
+Log in with the admin account you just created.
+
+## Features
+
+### 📋 Schedule Management
+- **Auto Sync**: Automatically sync all scheduled tasks from code to database
+- **Schedule List**: Clearly display all scheduled tasks, including name, command, execution time, and other information
+- **Enable/Disable**: Toggle schedule status with one click
+- **Run Now**: Manually trigger schedule execution without waiting for the scheduled time
+- **Complete Logging**: Record detailed information for each schedule execution
+- **Execution Status**: Display execution status such as success, failure, skipped, etc.
+- **Execution Output**: View complete command execution output
+- **Execution Duration**: Record the duration of each execution
+- **Error Tracking**: Record error messages when execution fails
+
+
+## Usage
+
+### 1. Initial Setup
+
+### Example
+
+Define schedules in `routes/console.php`:
+
+```php
+// Test schedule: runs every ten minutes
+schedule_command('say:good-evening')
+    ->everyTenMinutes()
+    ->description('Say good evening every ten minutes');
+```
+
+After logging into the admin panel, you need to sync schedules from code to the database for the first time:
+
+1. Go to the "Scheduled Tasks" page in the Filament admin panel
+2. Click the "Sync Schedules" button in the top right corner
+3. The system will automatically scan and sync all scheduled tasks
+
+
+### ⚠️ Important Reminder
+
+If you create a new Artisan command, remember to register it in `routes/console.php` using `schedule_command`, then execute "Sync Schedules" in the admin panel for it to appear in the UI.
+
+## Language: Supports Chinese and English Bilingual Interface
+
+Configure in ENV:
+```
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
+FILAMENT_SCHEDULE_UI_LOCALE=en
+```
+

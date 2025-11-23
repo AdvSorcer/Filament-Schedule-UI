@@ -1,5 +1,7 @@
 # Filament Schedule UI
 
+繁體中文 | [English](README_EN.md)
+
 一個基於 Filament 的 Laravel 排程管理工具，讓您可以在後台介面中輕鬆管理和監控所有排程任務。
 
 ![排程列表](docs/images/ui-1.png)
