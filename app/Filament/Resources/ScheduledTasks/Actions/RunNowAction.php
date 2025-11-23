@@ -43,7 +43,9 @@ class RunNowAction extends Action
             $exitCode = 0;
 
             if ($record->command_type === 'command') {
-                $exitCode = Artisan::call($record->command);
+                // 從命令字串中提取實際的 artisan 命令
+                $command = $this->extractArtisanCommand($record->command);
+                $exitCode = Artisan::call($command);
                 $output = Artisan::output();
             } elseif ($record->command_type === 'call') {
                 // 對於 call 類型，我們需要執行回調
@@ -69,12 +71,17 @@ class RunNowAction extends Action
 
             $record->update(['last_run_at' => $finishedAt]);
 
-            Notification::make()
+            $notification = Notification::make()
                 ->title($exitCode === 0 ? '執行成功' : '執行失敗')
-                ->body($exitCode === 0 ? '排程已成功執行' : "排程執行失敗，退出碼: {$exitCode}")
-                ->success($exitCode === 0)
-                ->danger($exitCode !== 0)
-                ->send();
+                ->body($exitCode === 0 ? '排程已成功執行' : "排程執行失敗，退出碼: {$exitCode}");
+
+            if ($exitCode === 0) {
+                $notification->success();
+            } else {
+                $notification->danger();
+            }
+
+            $notification->send();
         } catch (\Exception $e) {
             $finishedAt = now();
             $duration = $startedAt->diffInMilliseconds($finishedAt);
@@ -93,5 +100,42 @@ class RunNowAction extends Action
                 ->danger()
                 ->send();
         }
+    }
+
+    /**
+     * 從完整的命令字串中提取 artisan 命令名稱
+     * 例如: "'/path/to/php' 'artisan' say:hi" -> "say:hi"
+     */
+    protected function extractArtisanCommand(string $command): string
+    {
+        // 移除引號並分割命令
+        $command = trim($command, "'\"");
+
+        // 如果命令包含 'artisan'，提取 artisan 後面的部分
+        if (preg_match("/['\"]artisan['\"]\s+(['\"]?)([^\s'\"]+)\\1/", $command, $matches)) {
+            return $matches[2];
+        }
+
+        // 如果命令以 "artisan " 開頭，提取後面的部分
+        if (preg_match("/artisan\s+(['\"]?)([^\s'\"]+)\\1/", $command, $matches)) {
+            return $matches[2];
+        }
+
+        // 如果已經是純命令名稱（不包含路徑），直接返回
+        if (! str_contains($command, '/') && ! str_contains($command, 'artisan')) {
+            return $command;
+        }
+
+        // 嘗試從命令中提取最後一個參數（通常是命令名稱）
+        $parts = preg_split("/\s+/", $command);
+        foreach (array_reverse($parts) as $part) {
+            $part = trim($part, "'\"");
+            if (! empty($part) && ! str_contains($part, '/') && ! str_contains($part, 'php')) {
+                return $part;
+            }
+        }
+
+        // 如果都無法解析，返回原命令（可能會失敗，但至少會顯示錯誤）
+        return $command;
     }
 }

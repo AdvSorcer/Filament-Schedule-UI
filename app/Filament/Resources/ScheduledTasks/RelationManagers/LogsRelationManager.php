@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ScheduledTasks\RelationManagers;
 
 use App\ScheduledTaskLogStatus;
+use Filament\Actions\ViewAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -44,6 +45,23 @@ class LogsRelationManager extends RelationManager
                     ->label('錯誤訊息')
                     ->limit(50)
                     ->wrap(),
+                TextColumn::make('output')
+                    ->label('執行輸出')
+                    ->limit(100)
+                    ->wrap()
+                    ->toggleable()
+                    ->copyable(),
+            ])
+            ->recordActions([
+                ViewAction::make()
+                    ->label('查看完整輸出')
+                    ->modalHeading(fn ($record) => '執行記錄 #'.$record->id)
+                    ->modalContent(function ($record) {
+                        return view('filament.scheduled-tasks.log-detail', [
+                            'log' => $record,
+                        ]);
+                    })
+                    ->modalWidth('4xl'),
             ])
             ->filters([
                 SelectFilter::make('status')
