@@ -1,59 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Filament Schedule UI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+一個基於 Filament 的 Laravel 排程管理工具，讓您可以在後台介面中輕鬆管理和監控所有排程任務。
 
-## About Laravel
+## 功能特色
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 📋 排程管理
+- **自動同步**：自動從程式碼中同步所有排程任務到資料庫
+- **排程列表**：清晰顯示所有排程任務，包含名稱、命令、執行時間等資訊
+- **啟用/停用**：一鍵切換排程的啟用狀態
+- **立即執行**：手動觸發排程執行，無需等待排程時間
+- **完整記錄**：記錄每次排程執行的詳細資訊
+- **執行狀態**：顯示執行成功、失敗、跳過等狀態
+- **執行輸出**：查看完整的命令執行輸出
+- **執行時長**：記錄每次執行的耗時
+- **錯誤追蹤**：記錄執行失敗時的錯誤訊息
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 使用方式
 
-## Learning Laravel
+### 1. 同步排程
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+首次使用時，需要將程式碼中的排程同步到資料庫：
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. 在 Filament 後台進入「排程任務」頁面
+2. 點擊右上角的「同步排程」按鈕
+3. 系統會自動掃描並同步所有排程任務
 
-## Laravel Sponsors
+### 2. 管理排程
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+在排程列表中，您可以：
 
-### Premium Partners
+- **查看排程資訊**：名稱、命令、Cron 表達式、下次執行時間等
+- **啟用/停用排程**：使用「啟用」欄位的開關按鈕
+- **立即執行**：點擊「立即執行」按鈕手動觸發排程
+- **查看詳情**：點擊排程名稱進入詳情頁面
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
+## 排程設定
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+在 `routes/console.php` 中定義排程：
 
-## Code of Conduct
+```php
+use Illuminate\Support\Facades\Schedule;
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Schedule::command('say:hi')
+    ->dailyAt('08:00')
+    ->description('每天早上 8 點說 Hi');
+```
 
-## Security Vulnerabilities
+定義完成後，在後台點擊「同步排程」即可將排程加入管理系統。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 注意事項
 
-## License
+- 排程任務會自動從程式碼同步，無需手動建立
+- 停用的排程不會執行，但仍會保留在列表中
+- 執行記錄會永久保存，方便追蹤歷史執行情況
+- 建議定期同步排程，確保資料庫中的排程與程式碼一致
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
