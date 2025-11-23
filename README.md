@@ -1,5 +1,10 @@
 # Filament Schedule UI
 
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.3+-777BB4.svg)](https://www.php.net)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Tests](https://img.shields.io/github/actions/workflow/status/AdvSorcer/Filament-Schedule-UI/tests.yml?label=tests)](https://github.com/AdvSorcer/Filament-Schedule-UI/actions)
+
 繁體中文 | [English](README_EN.md)
 
 一個基於 Filament 的 Laravel 排程管理工具，讓您可以在後台介面中輕鬆管理和監控所有排程任務。

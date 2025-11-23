@@ -1,5 +1,10 @@
 # Filament Schedule UI
 
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.3+-777BB4.svg)](https://www.php.net)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Tests](https://img.shields.io/github/actions/workflow/status/AdvSorcer/Filament-Schedule-UI/tests.yml?label=tests)](https://github.com/AdvSorcer/Filament-Schedule-UI/actions)
+
 English | [繁體中文](README.md)
 
 A Laravel schedule management tool based on Filament that allows you to easily manage and monitor all scheduled tasks in the admin interface.
