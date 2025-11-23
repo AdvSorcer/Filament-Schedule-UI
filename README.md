@@ -34,6 +34,14 @@ cp .env.example .env
 php artisan key:generate
 ```
 
+#### 語言：支持中文、英文
+
+在 ENV 設定
+```
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
+FILAMENT_SCHEDULE_UI_LOCALE=en
+```
+
 ### 3. 資料庫設定
 
 設定資料庫連線（在 `.env` 中），然後執行遷移：
@@ -108,12 +116,6 @@ schedule_command('say:good-evening')
 
 如果您建立了新的 Artisan 命令（Command），記得要在 `routes/console.php` 中使用 `schedule_command` 註冊排程，然後在後台執行「同步排程」才會出現在 UI 中。
 
-## 語言：支持中文英語雙語介面
 
-在 ENV 設定
-```
-FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
-FILAMENT_SCHEDULE_UI_LOCALE=en
-```
 
 

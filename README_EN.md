@@ -34,6 +34,14 @@ cp .env.example .env
 php artisan key:generate
 ```
 
+#### Language: Supports Chinese and English Bilingual Interface
+
+Configure in ENV
+```
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
+FILAMENT_SCHEDULE_UI_LOCALE=en
+```
+
 ### 3. Database Setup
 
 Configure the database connection (in `.env`), then run migrations:
@@ -108,11 +116,5 @@ After logging into the admin panel, you need to sync schedules from code to the 
 
 If you create a new Artisan command, remember to register it in `routes/console.php` using `schedule_command`, then execute "Sync Schedules" in the admin panel for it to appear in the UI.
 
-## Language: Supports Chinese and English Bilingual Interface
 
-Configure in ENV:
-```
-FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
-FILAMENT_SCHEDULE_UI_LOCALE=en
-```
 
