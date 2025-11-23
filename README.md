@@ -2,12 +2,13 @@
 
 一個基於 Filament 的 Laravel 排程管理工具，讓您可以在後台介面中輕鬆管理和監控所有排程任務。
 
+![排程列表](docs/images/ui-1.png)
+
 ## 系統需求
 
 - PHP >= 8.2
 - Laravel >= 12.0
 - Composer
-- Node.js & NPM（**可選**，僅在需要自定義樣式或 JavaScript 時才需要）
 
 ## 安裝步驟
 
@@ -85,8 +86,6 @@ http://your-domain/admin
 
 ### ⚠️ 重要提醒
 
-**在 Laravel 11+ 中，所有排程任務必須在 `routes/console.php` 中定義。**
-
 如果您建立了新的 Artisan 命令（Command），記得要在 `routes/console.php` 中使用 `Schedule::command()` 註冊排程，然後在後台執行「同步排程」才會出現在 UI 中。
 
 ### 範例
@@ -101,15 +100,4 @@ Schedule::command('say:hi')
     ->description('每天早上 8 點說 Hi');
 ```
 
-定義完成後，在後台點擊「同步排程」即可將排程加入管理系統。
-
-
-## 注意事項
-
-- **排程註冊位置**：所有排程必須在 `routes/console.php` 中定義（Laravel 11+ 的新結構）
-- **同步排程**：建立新的 Command 後，記得在 `routes/console.php` 中註冊排程，然後執行「同步排程」才會出現在 UI 中
-- 排程任務會自動從程式碼同步，無需手動建立
-- 停用的排程不會執行，但仍會保留在列表中
-- 執行記錄會永久保存，方便追蹤歷史執行情況
-- 確保伺服器已設定 Laravel 排程器（cron job）：`* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`
 
