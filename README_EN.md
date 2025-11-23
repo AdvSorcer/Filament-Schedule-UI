@@ -134,4 +134,28 @@ After logging into the admin panel, you need to sync schedules from code to the 
 If you create a new Artisan command, remember to register it in `routes/console.php` using `schedule_command`, then execute "Sync Schedules" in the admin panel for it to appear in the UI.
 
 
+### LazySample
+```php
+<?php
 
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+
+class SayGoodEveningCommand extends Command
+{
+    protected $signature = 'say:good-evening';
+
+    protected $description = 'Say good evening in the log';
+
+    public function handle(): int
+    {
+        $this->info('=== Task Start ===');
+        $this->info('Saying Good Evening...');
+        \Log::info('Say Good Evening: '.now()->toDateTimeString());
+        $this->info('=== Task End ===');
+
+        return Command::SUCCESS;
+    }
+}
+```

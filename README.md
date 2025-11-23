@@ -128,5 +128,28 @@ schedule_command('say:good-evening')
 如果您建立了新的 Artisan 命令（Command），記得要在 `routes/console.php` 中使用 `schedule_command` 註冊排程，然後在後台執行「同步排程」才會出現在 UI 中。
 
 
+### 懶人範例
+```php
+<?php
 
+namespace App\Console\Commands;
 
+use Illuminate\Console\Command;
+
+class SayGoodEveningCommand extends Command
+{
+    protected $signature = 'say:good-evening';
+
+    protected $description = 'Say good evening in the log';
+
+    public function handle(): int
+    {
+        $this->info('=== Task Start ===');
+        $this->info('Saying Good Evening...');
+        \Log::info('Say Good Evening: 晚安！這是排程任務，執行時間：'.now()->toDateTimeString());
+        $this->info('=== Task End ===');
+
+        return Command::SUCCESS;
+    }
+}
+```
