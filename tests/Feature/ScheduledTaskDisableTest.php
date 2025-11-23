@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\ScheduledTask;
+use AdvSorcer\FilamentScheduleUI\Models\ScheduledTask;
 use Illuminate\Support\Facades\Artisan;
 
 uses(Illuminate\Foundation\Testing\RefreshDatabase::class);

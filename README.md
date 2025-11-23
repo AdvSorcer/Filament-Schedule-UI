@@ -24,62 +24,78 @@
 
 ## 安裝步驟
 
-### 1. 安裝依賴
+### 1. 安裝 Package
+
+使用 Composer 安裝：
 
 ```bash
-composer install
+composer require advsorcer/filament-schedule-ui
 ```
 
-### 2. 環境配置
+### 2. 發布配置檔案
 
-複製環境變數檔案並設定：
+發布配置檔案到你的專案：
 
 ```bash
-cp .env.example .env
-php artisan key:generate
+php artisan vendor:publish --tag=filament-schedule-ui-config
 ```
 
-#### 語言：支持中文、英文
+這會將配置檔案發布到 `config/filament-schedule-ui.php`。
 
-在 ENV 設定
-```
-FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
-FILAMENT_SCHEDULE_UI_LOCALE=en
-```
+### 3. 發布並執行遷移
 
-### 3. 資料庫設定
-
-設定資料庫連線（在 `.env` 中），然後執行遷移：
+發布遷移檔案並執行：
 
 ```bash
+php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 4. 建立 Filament 管理員
+### 4. 發布語言檔案（可選）
 
-建立第一個管理員帳號以登入後台：
+如果需要自訂語言檔案：
 
 ```bash
-php artisan make:filament-user
+php artisan vendor:publish --tag=filament-schedule-ui-lang
 ```
 
-依照提示輸入姓名、電子郵件和密碼。
+### 5. 在 Filament Panel 中註冊資源
 
-### 5. 存取後台
+在你的 Filament Panel Provider（通常是 `app/Providers/Filament/AdminPanelProvider.php`）中註冊資源：
 
-啟動應用程式後，前往：
+```php
+use AdvSorcer\FilamentScheduleUI\Filament\Resources\ScheduledTasks\ScheduledTaskResource;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... 其他配置
+        ->resources([
+            ScheduledTaskResource::class,
+        ]);
+}
+```
+
+或者使用自動發現（如果資源在標準位置）：
+
+```php
+->discoverResources(
+    in: base_path('vendor/advsorcer/filament-schedule-ui/src/Filament/Resources'),
+    for: 'AdvSorcer\\FilamentScheduleUI\\Filament\\Resources'
+)
+```
+
+### 6. 配置語言（可選）
+
+在 `.env` 中設定語言：
 
 ```
-php artisan serve
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
+# 或
+FILAMENT_SCHEDULE_UI_LOCALE=en
 ```
 
-```
-http://your-domain/admin
-or
-http://127.0.0.1:8000/admin
-```
-
-使用剛才建立的管理員帳號登入。
+預設為 `zh_TW`（繁體中文）。
 
 ## 功能特色
 

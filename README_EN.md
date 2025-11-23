@@ -24,62 +24,78 @@ Execution Messages
 
 ## Installation Steps
 
-### 1. Install Dependencies
+### 1. Install Package
+
+Install via Composer:
 
 ```bash
-composer install
+composer require advsorcer/filament-schedule-ui
 ```
 
-### 2. Environment Configuration
+### 2. Publish Configuration
 
-Copy the environment variables file and configure:
+Publish the configuration file to your project:
 
 ```bash
-cp .env.example .env
-php artisan key:generate
+php artisan vendor:publish --tag=filament-schedule-ui-config
 ```
 
-#### Language: Supports Chinese and English Bilingual Interface
+This will publish the configuration file to `config/filament-schedule-ui.php`.
 
-Configure in ENV
-```
-FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
-FILAMENT_SCHEDULE_UI_LOCALE=en
-```
+### 3. Publish and Run Migrations
 
-### 3. Database Setup
-
-Configure the database connection (in `.env`), then run migrations:
+Publish migration files and run them:
 
 ```bash
+php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 4. Create Filament Admin
+### 4. Publish Language Files (Optional)
 
-Create the first admin account to log in to the admin panel:
+If you need to customize language files:
 
 ```bash
-php artisan make:filament-user
+php artisan vendor:publish --tag=filament-schedule-ui-lang
 ```
 
-Follow the prompts to enter your name, email, and password.
+### 5. Register Resource in Filament Panel
 
-### 5. Access Admin Panel
+Register the resource in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
 
-After starting the application, navigate to:
+```php
+use AdvSorcer\FilamentScheduleUI\Filament\Resources\ScheduledTasks\ScheduledTaskResource;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... other configurations
+        ->resources([
+            ScheduledTaskResource::class,
+        ]);
+}
+```
+
+Or use auto-discovery (if resources are in standard location):
+
+```php
+->discoverResources(
+    in: base_path('vendor/advsorcer/filament-schedule-ui/src/Filament/Resources'),
+    for: 'AdvSorcer\\FilamentScheduleUI\\Filament\\Resources'
+)
+```
+
+### 6. Configure Language (Optional)
+
+Set the language in `.env`:
 
 ```
-php artisan serve
+FILAMENT_SCHEDULE_UI_LOCALE=en
+# or
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
 ```
 
-```
-http://your-domain/admin
-or
-http://127.0.0.1:8000/admin
-```
-
-Log in with the admin account you just created.
+Default is `zh_TW` (Traditional Chinese).
 
 ## Features
 
