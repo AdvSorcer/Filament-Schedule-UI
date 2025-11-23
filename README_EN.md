@@ -35,8 +35,6 @@ Install via Composer:
 composer require advsorcer/filament-schedule-ui
 ```
 
-📦 **Packagist**: [packagist.org/packages/advsorcer/filament-schedule-ui](https://packagist.org/packages/advsorcer/filament-schedule-ui)
-
 ### 2. Publish Configuration
 
 Publish the configuration file to your project:

@@ -35,8 +35,6 @@
 composer require advsorcer/filament-schedule-ui
 ```
 
-📦 **Packagist**: [packagist.org/packages/advsorcer/filament-schedule-ui](https://packagist.org/packages/advsorcer/filament-schedule-ui)
-
 ### 2. 發布配置檔案
 
 發布配置檔案到你的專案：
