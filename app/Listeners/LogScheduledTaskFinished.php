@@ -36,7 +36,13 @@ class LogScheduledTaskFinished
             ]);
         }
 
-        $task->update(['last_run_at' => now()]);
+        // 更新最後執行時間並重新計算下次執行時間
+        $nextRunAt = $task->calculateNextRunAt();
+        $updateData = ['last_run_at' => now()];
+        if ($nextRunAt) {
+            $updateData['next_run_at'] = $nextRunAt;
+        }
+        $task->update($updateData);
     }
 
     protected function findTask(ScheduledTaskFinished $event): ?ScheduledTask

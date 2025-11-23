@@ -4,6 +4,10 @@
 
 ![排程列表](docs/images/ui-1.png)
 
+執行訊息
+
+![執行訊息](docs/images/ui-2.png)
+
 ## 系統需求
 
 - PHP >= 8.2

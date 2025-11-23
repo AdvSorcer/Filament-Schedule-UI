@@ -30,12 +30,26 @@ if (! function_exists('schedule_command')) {
         $event->sendOutputTo($outputFile);
 
         // 在命令執行完成後讀取輸出並更新資料庫
-        $event->after(function () use ($outputFile, $command) {
+        $event->after(function () use ($outputFile, $command, $fileHash) {
             $task = ScheduledTask::where('command', $command)->first();
+
+            // 清理函數：刪除所有相關的 log 檔案
+            $cleanupFiles = function () use ($outputFile, $fileHash) {
+                // 刪除我們創建的臨時檔案
+                if (file_exists($outputFile)) {
+                    @unlink($outputFile);
+                }
+
+                // 也檢查並刪除 storage/logs 目錄下可能存在的舊檔案
+                $legacyLogFile = storage_path('logs/schedule-'.$fileHash.'.log');
+                if (file_exists($legacyLogFile)) {
+                    @unlink($legacyLogFile);
+                }
+            };
 
             if (! $task) {
                 // 如果找不到任務，清理檔案後返回
-                @unlink($outputFile);
+                $cleanupFiles();
 
                 return;
             }
@@ -56,11 +70,11 @@ if (! function_exists('schedule_command')) {
                     $log->update(['output' => $output ?: null]);
                 }
 
-                // 清理臨時檔案
-                @unlink($outputFile);
-            } elseif (file_exists($outputFile)) {
-                // 如果找不到對應的 log，也清理檔案
-                @unlink($outputFile);
+                // 清理所有相關的臨時檔案
+                $cleanupFiles();
+            } else {
+                // 如果找不到對應的 log 或檔案不存在，也清理檔案
+                $cleanupFiles();
             }
         });
 

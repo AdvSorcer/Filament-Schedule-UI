@@ -22,6 +22,12 @@ class LogScheduledTaskSkipped
             'finished_at' => now(),
             'duration' => 0,
         ]);
+
+        // 重新計算下次執行時間（跳過的任務也需要更新）
+        $nextRunAt = $task->calculateNextRunAt();
+        if ($nextRunAt) {
+            $task->update(['next_run_at' => $nextRunAt]);
+        }
     }
 
     protected function findTask(ScheduledTaskSkipped $event): ?ScheduledTask
