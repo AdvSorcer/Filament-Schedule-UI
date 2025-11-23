@@ -70,15 +70,7 @@ php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 6. Publish Language Files (Optional)
-
-If you need to customize language files:
-
-```bash
-php artisan vendor:publish --tag=filament-schedule-ui-lang
-```
-
-### 7. Register Plugin in Filament Panel
+### 6. Register Plugin in Filament Panel
 
 Register the plugin in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
 
@@ -93,9 +85,15 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-### 8. Configure Language (Optional)
+### 7. Configure Language (Optional)
 
-Set the language in `.env`:
+If you need to customize language files, publish the language files:
+
+```bash
+php artisan vendor:publish --tag=filament-schedule-ui-lang
+```
+
+Then set the language in `.env`:
 
 ```
 FILAMENT_SCHEDULE_UI_LOCALE=en
