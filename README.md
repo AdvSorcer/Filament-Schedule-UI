@@ -22,6 +22,7 @@
 
 - PHP >= 8.3
 - Laravel >= 12.0
+- Filament >= 4.0
 - Composer
 
 ## 安裝步驟
@@ -63,30 +64,19 @@ php artisan migrate
 php artisan vendor:publish --tag=filament-schedule-ui-lang
 ```
 
-### 5. 在 Filament Panel 中註冊資源
+### 5. 在 Filament Panel 中註冊 Plugin
 
-在你的 Filament Panel Provider（通常是 `app/Providers/Filament/AdminPanelProvider.php`）中註冊資源：
+在你的 Filament Panel Provider（通常是 `app/Providers/Filament/AdminPanelProvider.php`）中註冊 Plugin：
 
 ```php
-use AdvSorcer\FilamentScheduleUI\Filament\Resources\ScheduledTasks\ScheduledTaskResource;
+use AdvSorcer\FilamentScheduleUI\FilamentScheduleUIPlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         // ... 其他配置
-        ->resources([
-            ScheduledTaskResource::class,
-        ]);
+        ->plugin(FilamentScheduleUIPlugin::make());
 }
-```
-
-或者使用自動發現（如果資源在標準位置）：
-
-```php
-->discoverResources(
-    in: base_path('vendor/advsorcer/filament-schedule-ui/src/Filament/Resources'),
-    for: 'AdvSorcer\\FilamentScheduleUI\\Filament\\Resources'
-)
 ```
 
 ### 6. 配置語言（可選）

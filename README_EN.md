@@ -22,6 +22,7 @@ Execution Messages
 
 - PHP >= 8.3
 - Laravel >= 12.0
+- Filament >= 4.0
 - Composer
 
 ## Installation Steps
@@ -63,30 +64,19 @@ If you need to customize language files:
 php artisan vendor:publish --tag=filament-schedule-ui-lang
 ```
 
-### 5. Register Resource in Filament Panel
+### 5. Register Plugin in Filament Panel
 
-Register the resource in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
+Register the plugin in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
 
 ```php
-use AdvSorcer\FilamentScheduleUI\Filament\Resources\ScheduledTasks\ScheduledTaskResource;
+use AdvSorcer\FilamentScheduleUI\FilamentScheduleUIPlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         // ... other configurations
-        ->resources([
-            ScheduledTaskResource::class,
-        ]);
+        ->plugin(FilamentScheduleUIPlugin::make());
 }
-```
-
-Or use auto-discovery (if resources are in standard location):
-
-```php
-->discoverResources(
-    in: base_path('vendor/advsorcer/filament-schedule-ui/src/Filament/Resources'),
-    for: 'AdvSorcer\\FilamentScheduleUI\\Filament\\Resources'
-)
 ```
 
 ### 6. Configure Language (Optional)
