@@ -4,8 +4,9 @@ namespace App\Filament\Resources\ScheduledTasks\Tables;
 
 use App\Filament\Resources\ScheduledTasks\Actions\RunNowAction;
 use App\Filament\Resources\ScheduledTasks\Actions\SyncSchedulesAction;
-use App\Filament\Resources\ScheduledTasks\Actions\ToggleActiveAction;
+use App\Models\ScheduledTask;
 use Filament\Actions\BulkActionGroup;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -17,10 +18,12 @@ class ScheduledTasksTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('description')
                     ->label('名稱')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->formatStateUsing(fn ($state, $record) => $state ?: $record->command)
+                    ->placeholder('-'),
                 TextColumn::make('command')
                     ->label('命令')
                     ->searchable()
@@ -38,7 +41,25 @@ class ScheduledTasksTable
                     ->label('Cron 表達式')
                     ->searchable(),
                 ToggleColumn::make('is_active')
-                    ->label('啟用'),
+                    ->label('啟用')
+                    ->afterStateUpdated(function (ScheduledTask $record, $state) {
+                        $taskName = $record->description ?: $record->command;
+                        $status = $state ? '已啟用' : '已停用';
+
+                        try {
+                            Notification::make()
+                                ->title('操作成功')
+                                ->body("排程「{$taskName}」已{$status}")
+                                ->success()
+                                ->send();
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->title('操作失敗')
+                                ->body('更新排程狀態時發生錯誤: '.$e->getMessage())
+                                ->danger()
+                                ->send();
+                        }
+                    }),
                 TextColumn::make('next_run_at')
                     ->label('下次執行')
                     ->dateTime()
@@ -65,7 +86,6 @@ class ScheduledTasksTable
             ])
             ->recordActions([
                 RunNowAction::make(),
-                ToggleActiveAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
