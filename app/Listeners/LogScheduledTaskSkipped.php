@@ -36,7 +36,8 @@ class LogScheduledTaskSkipped
         $task = $event->task;
 
         if ($task->command) {
-            return $task->command;
+            // 從完整的命令字串中提取純粹的 artisan 命令名稱
+            return $this->extractArtisanCommandFromFullCommand($task->command);
         }
 
         if ($task->callback) {
@@ -57,5 +58,38 @@ class LogScheduledTaskSkipped
         }
 
         return 'unknown';
+    }
+
+    protected function extractArtisanCommandFromFullCommand(string $command): string
+    {
+        // 移除引號並分割命令
+        $command = trim($command, "'\"");
+
+        // 如果命令包含 'artisan'，提取 artisan 後面的部分
+        if (preg_match("/['\"]artisan['\"]\s+(['\"]?)([^\s'\"]+)\\1/", $command, $matches)) {
+            return $matches[2];
+        }
+
+        // 如果命令以 "artisan " 開頭，提取後面的部分
+        if (preg_match("/artisan\s+(['\"]?)([^\s'\"]+)\\1/", $command, $matches)) {
+            return $matches[2];
+        }
+
+        // 如果已經是純命令名稱（不包含路徑），直接返回
+        if (! str_contains($command, '/') && ! str_contains($command, 'artisan')) {
+            return $command;
+        }
+
+        // 嘗試從命令中提取最後一個參數（通常是命令名稱）
+        $parts = preg_split("/\s+/", $command);
+        foreach (array_reverse($parts) as $part) {
+            $part = trim($part, "'\"");
+            if (! empty($part) && ! str_contains($part, '/') && ! str_contains($part, 'php')) {
+                return $part;
+            }
+        }
+
+        // 如果都無法解析，返回原命令
+        return $command;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\ScheduledTask;
+use App\ScheduledTaskLogStatus;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Facades\Schedule;
 
@@ -12,6 +13,56 @@ if (! function_exists('schedule_command')) {
     function schedule_command(string $command, array $parameters = []): Event
     {
         $event = Schedule::command($command, $parameters);
+
+        // 為每個排程命令生成唯一的輸出檔案路徑
+        $outputDir = storage_path('app/temp/schedule-outputs');
+
+        // 確保目錄存在
+        if (! is_dir($outputDir)) {
+            @mkdir($outputDir, 0755, true);
+        }
+
+        // 生成唯一的檔案名稱（使用命令名稱和時間戳的 hash）
+        $fileHash = md5($command.serialize($parameters));
+        $outputFile = $outputDir.'/schedule-'.$fileHash.'.log';
+
+        // 將命令輸出重定向到檔案
+        $event->sendOutputTo($outputFile);
+
+        // 在命令執行完成後讀取輸出並更新資料庫
+        $event->after(function () use ($outputFile, $command) {
+            $task = ScheduledTask::where('command', $command)->first();
+
+            if (! $task) {
+                // 如果找不到任務，清理檔案後返回
+                @unlink($outputFile);
+
+                return;
+            }
+
+            // 找到最近的 Running 狀態的 log
+            $log = $task->logs()
+                ->where('status', ScheduledTaskLogStatus::Running)
+                ->latest('started_at')
+                ->first();
+
+            if ($log && file_exists($outputFile)) {
+                // 讀取輸出檔案內容
+                $output = file_get_contents($outputFile);
+
+                // 更新 log 的 output（只有在還沒有被設置時才更新）
+                // 使用 is_null() 而不是 empty()，因為空字串也是一種有效的輸出
+                if (is_null($log->output)) {
+                    $log->update(['output' => $output ?: null]);
+                }
+
+                // 清理臨時檔案
+                @unlink($outputFile);
+            } elseif (file_exists($outputFile)) {
+                // 如果找不到對應的 log，也清理檔案
+                @unlink($outputFile);
+            }
+        });
 
         return $event->when(function () use ($command) {
             $task = ScheduledTask::where('command', $command)->first();
