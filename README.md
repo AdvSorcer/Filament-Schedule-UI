@@ -54,7 +54,13 @@ php artisan make:filament-user
 啟動應用程式後，前往：
 
 ```
+php artisan serve
+```
+
+```
 http://your-domain/admin
+or
+http://127.0.0.1:8000/admin
 ```
 
 使用剛才建立的管理員帳號登入。
