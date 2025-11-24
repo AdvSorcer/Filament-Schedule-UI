@@ -51,6 +51,9 @@ CHANGELOG.md export-ignore
 /boost.json export-ignore
 /node_modules export-ignore
 /vendor export-ignore
+/.cursor export-ignore
+/.editorconfig export-ignore
+/.env.example export-ignore
 
 # 其他文件
 README_EN.md export-ignore
