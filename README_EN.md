@@ -149,6 +149,10 @@ If you create a new Artisan command, remember to register it in `routes/console.
 
 
 ### LazySample
+```sh
+php artisan make:command SayGoodEveningCommand
+```
+
 ```php
 <?php
 

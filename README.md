@@ -144,6 +144,10 @@ schedule_command('say:good-evening')
 
 
 ### 懶人範例
+```sh
+php artisan make:command SayGoodEveningCommand
+```
+
 ```php
 <?php
 
