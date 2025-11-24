@@ -81,6 +81,12 @@ class AdminPanelProvider extends PanelProvider
 }
 ```
 
+### 6. Admin Panel
+```
+http://your-domain/admin
+```
+
+
 ## Features
 
 ### 📋 Schedule Management
@@ -95,35 +101,7 @@ class AdminPanelProvider extends PanelProvider
 - **Error Tracking**
 
 
-## Optional Configuration
 
-### Publish Configuration File (Optional)
-
-If you need to customize the configuration, you can publish the configuration file:
-
-```bash
-php artisan vendor:publish --tag=filament-schedule-ui-config
-```
-
-This will publish the configuration file to `config/filament-schedule-ui.php`, where you can modify it according to your needs.
-
-### Configure Language (Optional)
-
-If you need to customize language files or switch languages:
-
-```bash
-php artisan vendor:publish --tag=filament-schedule-ui-lang
-```
-
-Then set the language in `.env`:
-
-```
-FILAMENT_SCHEDULE_UI_LOCALE=en
-# or
-FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
-```
-
-Default is `zh_TW` (Traditional Chinese).
 
 
 ## Usage
@@ -182,3 +160,34 @@ class SayGoodEveningCommand extends Command
     }
 }
 ```
+
+
+## Optional Configuration
+
+### Publish Configuration File (Optional)
+
+If you need to customize the configuration, you can publish the configuration file:
+
+```bash
+php artisan vendor:publish --tag=filament-schedule-ui-config
+```
+
+This will publish the configuration file to `config/filament-schedule-ui.php`, where you can modify it according to your needs.
+
+### Configure Language (Optional)
+
+If you need to customize language files or switch languages:
+
+```bash
+php artisan vendor:publish --tag=filament-schedule-ui-lang
+```
+
+Then set the language in `.env`:
+
+```
+FILAMENT_SCHEDULE_UI_LOCALE=en
+# or
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
+```
+
+Default is `zh_TW` (Traditional Chinese).
