@@ -9,3 +9,50 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# 應用程式相關檔案
+/app export-ignore
+/artisan export-ignore
+/bootstrap export-ignore
+/routes export-ignore
+/public export-ignore
+/storage export-ignore
+/docs export-ignore
+
+# 應用程式資料庫檔案
+/database/database.sqlite export-ignore
+/database/factories export-ignore
+/database/seeders export-ignore
+/database/migrations/0001_01_01_000000_create_users_table.php export-ignore
+/database/migrations/0001_01_01_000001_create_cache_table.php export-ignore
+/database/migrations/0001_01_01_000002_create_jobs_table.php export-ignore
+
+# 應用程式配置檔案
+/config/app.php export-ignore
+/config/auth.php export-ignore
+/config/cache.php export-ignore
+/config/database.php export-ignore
+/config/filesystems.php export-ignore
+/config/logging.php export-ignore
+/config/mail.php export-ignore
+/config/queue.php export-ignore
+/config/services.php export-ignore
+/config/session.php export-ignore
+
+# 應用程式資源檔案
+/resources/css export-ignore
+/resources/js export-ignore
+/resources/views/welcome.blade.php export-ignore
+
+# 開發相關檔案
+/phpunit.xml export-ignore
+/vite.config.js export-ignore
+/package.json export-ignore
+/boost.json export-ignore
+/node_modules export-ignore
+/vendor export-ignore
+
+# 其他文件
+README_EN.md export-ignore
+CONTRIBUTING.md export-ignore
+SECURITY.md export-ignore
