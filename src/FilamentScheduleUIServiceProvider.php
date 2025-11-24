@@ -56,7 +56,7 @@ class FilamentScheduleUIServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../lang', null);
 
         // 載入視圖檔案（從 package 目錄）
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'filament');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'filament-schedule-ui');
 
         // 註冊 Artisan 命令
         $this->commands([

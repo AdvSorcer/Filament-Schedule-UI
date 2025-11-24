@@ -57,7 +57,7 @@ class LogsRelationManager extends RelationManager
                     ->label(__('schedule.view_full_output'))
                     ->modalHeading(fn ($record) => __('schedule.log_detail', ['id' => $record->id]))
                     ->modalContent(function ($record) {
-                        return view('filament::scheduled-tasks.log-detail', [
+                        return view('filament-schedule-ui::scheduled-tasks.log-detail', [
                             'log' => $record,
                         ]);
                     })
@@ -77,4 +77,3 @@ class LogsRelationManager extends RelationManager
             ->poll('30s');
     }
 }
-
