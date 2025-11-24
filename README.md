@@ -62,16 +62,31 @@ php artisan migrate
 
 在你的 Filament Panel Provider（通常是 `app/Providers/Filament/AdminPanelProvider.php`）中註冊 Plugin：
 
-```php
-use AdvSorcer\FilamentScheduleUI\FilamentScheduleUIPlugin;
+**重要：請確保在檔案頂部加入正確的 use 語句！**
 
-public function panel(Panel $panel): Panel
+```php
+<?php
+
+namespace App\Providers\Filament;
+
+use Filament\Panel;
+use Filament\PanelProvider;
+use AdvSorcer\FilamentScheduleUI\FilamentScheduleUIPlugin; // ← 必須加入這行
+
+class AdminPanelProvider extends PanelProvider
 {
-    return $panel
-        // ... 其他配置
-        ->plugin(FilamentScheduleUIPlugin::make());
+    public function panel(Panel $panel): Panel
+    {
+        return $panel
+            ->default()
+            ->id('admin')
+            ->path('admin')
+            // ... 其他配置
+            ->plugin(FilamentScheduleUIPlugin::make()); // ← 在這裡使用
+    }
 }
 ```
+
 
 ### 7. 配置語言
 

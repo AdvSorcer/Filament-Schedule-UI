@@ -64,14 +64,28 @@ php artisan migrate
 
 Register the plugin in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
 
-```php
-use AdvSorcer\FilamentScheduleUI\FilamentScheduleUIPlugin;
+**Important: Make sure to add the correct use statement at the top of the file!**
 
-public function panel(Panel $panel): Panel
+```php
+<?php
+
+namespace App\Providers\Filament;
+
+use Filament\Panel;
+use Filament\PanelProvider;
+use AdvSorcer\FilamentScheduleUI\FilamentScheduleUIPlugin; // ← Must add this line
+
+class AdminPanelProvider extends PanelProvider
 {
-    return $panel
-        // ... other configurations
-        ->plugin(FilamentScheduleUIPlugin::make());
+    public function panel(Panel $panel): Panel
+    {
+        return $panel
+            ->default()
+            ->id('admin')
+            ->path('admin')
+            // ... other configurations
+            ->plugin(FilamentScheduleUIPlugin::make()); // ← Use it here
+    }
 }
 ```
 
