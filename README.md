@@ -45,20 +45,14 @@ php artisan filament:install --panels
 php artisan make:filament-user
 ```
 
-### 4. 發布配置檔案
-
-```bash
-php artisan vendor:publish --tag=filament-schedule-ui-config
-```
-
-### 5. 發布並執行遷移
+### 4. 發布並執行遷移
 
 ```bash
 php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 6. 在 Filament Panel 中註冊 Plugin
+### 5. 在 Filament Panel 中註冊 Plugin
 
 在你的 Filament Panel Provider（通常是 `app/Providers/Filament/AdminPanelProvider.php`）中註冊 Plugin：
 
@@ -87,21 +81,6 @@ class AdminPanelProvider extends PanelProvider
 }
 ```
 
-
-### 7. 配置語言
-
-```bash
-php artisan vendor:publish --tag=filament-schedule-ui-lang
-```
-
-`.env` 中設定語言：
-
-```
-FILAMENT_SCHEDULE_UI_LOCALE=zh_TW  或
-FILAMENT_SCHEDULE_UI_LOCALE=en
-```
-
-
 ## 功能特色
 
 ### 📋 排程管理
@@ -114,6 +93,36 @@ FILAMENT_SCHEDULE_UI_LOCALE=en
 - **執行輸出**
 - **執行時長**
 - **錯誤追蹤**
+
+
+## 可選配置
+
+### 發布配置檔案（可選）
+
+如果需要自訂配置，可以發布配置檔案：
+
+```bash
+php artisan vendor:publish --tag=filament-schedule-ui-config
+```
+
+這會將配置檔案發布到 `config/filament-schedule-ui.php`，您可以根據需求修改配置。
+
+### 配置語言（可選）
+
+如果需要自訂語言檔案或切換語言：
+
+```bash
+php artisan vendor:publish --tag=filament-schedule-ui-lang
+```
+
+在 `.env` 中設定語言：
+
+```
+FILAMENT_SCHEDULE_UI_LOCALE=zh_TW  或
+FILAMENT_SCHEDULE_UI_LOCALE=en
+```
+
+預設為 `zh_TW`（繁體中文）。
 
 
 ## 使用方式

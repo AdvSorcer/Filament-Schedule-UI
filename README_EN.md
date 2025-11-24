@@ -45,22 +45,14 @@ php artisan filament:install --panels
 php artisan make:filament-user
 ```
 
-### 4. Publish Configuration
-
-```bash
-php artisan vendor:publish --tag=filament-schedule-ui-config
-```
-
-This will publish the configuration file to `config/filament-schedule-ui.php`.
-
-### 5. Publish and Run Migrations
+### 4. Publish and Run Migrations
 
 ```bash
 php artisan vendor:publish --tag=filament-schedule-ui-migrations
 php artisan migrate
 ```
 
-### 6. Register Plugin in Filament Panel
+### 5. Register Plugin in Filament Panel
 
 Register the plugin in your Filament Panel Provider (usually `app/Providers/Filament/AdminPanelProvider.php`):
 
@@ -89,9 +81,35 @@ class AdminPanelProvider extends PanelProvider
 }
 ```
 
-### 7. Configure Language (Optional)
+## Features
 
-If you need to customize language files, publish the language files:
+### 📋 Schedule Management
+- **Auto Sync**
+- **Schedule List**
+- **Enable/Disable**
+- **Run Now**
+- **Complete Logging**
+- **Execution Status**
+- **Execution Output**
+- **Execution Duration**
+- **Error Tracking**
+
+
+## Optional Configuration
+
+### Publish Configuration File (Optional)
+
+If you need to customize the configuration, you can publish the configuration file:
+
+```bash
+php artisan vendor:publish --tag=filament-schedule-ui-config
+```
+
+This will publish the configuration file to `config/filament-schedule-ui.php`, where you can modify it according to your needs.
+
+### Configure Language (Optional)
+
+If you need to customize language files or switch languages:
 
 ```bash
 php artisan vendor:publish --tag=filament-schedule-ui-lang
@@ -106,19 +124,6 @@ FILAMENT_SCHEDULE_UI_LOCALE=zh_TW
 ```
 
 Default is `zh_TW` (Traditional Chinese).
-
-## Features
-
-### 📋 Schedule Management
-- **Auto Sync**
-- **Schedule List**
-- **Enable/Disable**
-- **Run Now**
-- **Complete Logging**
-- **Execution Status**
-- **Execution Output**
-- **Execution Duration**
-- **Error Tracking**
 
 
 ## Usage
